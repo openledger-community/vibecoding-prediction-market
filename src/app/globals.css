@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@layer base {
+
+    button,
+    a {
+        cursor: pointer !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* button:hover,
+    a:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.1);
+    }
+
+    button:active,
+    a:active {
+        transform: translateY(0) scale(0.96);
+    } */
+}
+
+@layer utilities {
+    @keyframes premium-glow {
+
+        0%,
+        100% {
+            box-shadow: 0 0 15px rgba(79, 70, 229, 0.4), 0 0 30px rgba(79, 70, 229, 0.2);
+            border-color: rgba(99, 102, 241, 0.6);
+            transform: scale(1);
+        }
+
+        50% {
+            box-shadow: 0 0 25px rgba(79, 70, 229, 0.8), 0 0 50px rgba(79, 70, 229, 0.4);
+            border-color: rgba(99, 102, 241, 1);
+            transform: scale(1.02);
+        }
+    }
+
+    @keyframes border-rotate {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .animate-premium-glow {
+        animation: premium-glow 2s ease-in-out infinite;
+    }
+
+    .animate-shimmer {
+        background: linear-gradient(-45deg, #4f46e5, #818cf8, #c084fc, #4f46e5);
+        background-size: 400% 400%;
+        animation: border-rotate 4s ease infinite;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    /* Custom scrollbar for dark panels */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    @keyframes progress {
+        0% {
+            width: 0%;
+        }
+
+        50% {
+            width: 70%;
+        }
+
+        100% {
+            width: 100%;
+        }
+    }
+
+    .animate-progress {
+        animation: progress 3s ease-in-out infinite;
+    }
+}
