@@ -6,11 +6,8 @@ import {
     ChevronDownIcon,
     ArrowRightOnRectangleIcon,
     QuestionMarkCircleIcon,
-    Cog8ToothIcon,
-    RectangleStackIcon,
-    HomeIcon
+    Cog8ToothIcon
 } from "@heroicons/react/24/outline";
-import Link from "next/link";
 
 export default function Header() {
     const { data: session, status } = useSession();
@@ -34,37 +31,17 @@ export default function Header() {
         <header className="fixed top-0 left-0 right-0 z-50 bg-[#06060c]/80 backdrop-blur-md border-b border-white/5">
             <div className="w-full px-6 h-16 flex items-center justify-between">
                 {/* Logo Section */}
-                <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                    <div className="w-8 h-8 bg-gradient-to-r from-indigo-400 to-purple-400 rounded-lg flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/20">
+                <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/20">
                         O
                     </div>
                     <h1 className="text-xl font-bold tracking-tight">
-                        Open <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Prediction Platform</span>
+                        Open <span className="text-indigo-500">Prediction Platform</span>
                     </h1>
-                </Link>
+                </div>
 
                 {/* Profile / Auth Section */}
-                <div className="flex items-center gap-3">
-                    {/* My Apps Link - Only show when logged in */}
-                    {session && (
-                        <>
-                            <Link
-                                href="/"
-                                className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all"
-                            >
-                                <HomeIcon className="w-4 h-4" />
-                                Home
-                            </Link>
-                            <Link
-                                href="/my-apps"
-                                className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all"
-                            >
-                                <RectangleStackIcon className="w-4 h-4" />
-                                My Apps
-                            </Link>
-                        </>
-                    )}
-
+                <div className="flex items-center gap-4">
                     {status === "loading" ? (
                         <div className="w-20 h-8 bg-white/5 animate-pulse rounded-lg" />
                     ) : session ? (

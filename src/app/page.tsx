@@ -16,12 +16,8 @@ import PreviewModal from "@/components/PreviewModal";
 import LoginModal from "@/components/LoginModal";
 import CategoryModal from "@/components/CategoryModal";
 
-
-import { useRouter } from "next/navigation";
-
 export default function Home() {
   const { data: session, status } = useSession();
-  const router = useRouter();
 
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
@@ -37,10 +33,7 @@ export default function Home() {
   const [showVibeForm, setShowVibeForm] = useState(false);
   const [vibeLoading, setVibeLoading] = useState(false);
   const [vibeSuccess, setVibeSuccess] = useState(false);
-  const [vibeChat, setVibeChat] = useState<any | null>(null);
-  const [vibeError, setVibeError] = useState<string | null>(null);
-  const [currentPrompt, setCurrentPrompt] = useState<string>("");
-  const [currentDescription, setCurrentDescription] = useState<string>("");
+  const [vibeDemoUrl, setVibeDemoUrl] = useState<string | null>(null);
 
   // Active tab
   const [activeTab, setActiveTab] = useState("Search");
@@ -71,10 +64,6 @@ export default function Home() {
     setError(null);
     setShowVibeForm(false);
     setVibeSuccess(false);
-    setVibeChat(null);
-    setVibeError(null);
-    setCurrentPrompt("");
-    setCurrentDescription("");
   };
 
   const handleVibeSubmit = async (
@@ -83,13 +72,6 @@ export default function Home() {
     designPattern: DesignPatternId
   ) => {
     setVibeLoading(true);
-    setVibeLoading(true);
-    // Keep form open to show "Deploying..." state
-    // setShowVibeForm(false); 
-    // Set temp prompt for the loading view
-    setCurrentPrompt(`${displayName} — ${displayDescription}`);
-    setCurrentDescription(displayDescription);
-
     try {
       const res = await fetch("/api/vibe", {
         method: "POST",
@@ -103,31 +85,23 @@ export default function Home() {
       });
       if (res.ok) {
         const data = await res.json();
-        // Redirect to the new App View page using the returned UUID
-        if (data.data?.uuid) {
-          router.push(`/my-apps/${data.data.uuid}`);
-          return; // Stop here, page transition will happen
-        }
-
-        // Fallback (shouldn't happen if backend is correct)
         setVibeSuccess(true);
-        setVibeChat(data.data);
-      } else {
-        // Fallback: Show demo if API fails
-        console.warn("Vibe API failed, falling back to demo.");
-        try {
-          const err = await res.json();
-          console.error("Vibe API Error Response:", err);
-          // Optionally set error state if user wants feedback, but request said console only
-          // setVibeError(err.error || "API Error");
-        } catch (e) {
-          console.error("Vibe API failed with non-JSON response", res.status);
+        setShowVibeForm(false);
+        if (data.data?.demo) {
+          setVibeDemoUrl(data.data.demo);
+        } else if (data.data?.latestVersion?.demoUrl) {
+          setVibeDemoUrl(data.data.latestVersion.demoUrl);
         }
+      } else {
+        const err = await res.json().catch(() => ({ error: "Unknown error" }));
+        setError(err.error || "Vibe request failed");
+        // Fallback for testing: Show demo from ref.json even on error
+        setVibeDemoUrl("https://demo-kzmlihs8qgbzf2usq43n.vusercontent.net");
       }
     } catch (e) {
-      // Fallback: Show demo on network error
-      console.warn("Network error, falling back to demo.", e);
-      // setVibeError("Network Error");
+      setError(e instanceof Error ? e.message : "Network error");
+      // Fallback for testing: Show demo from ref.json even on network error
+      setVibeDemoUrl("https://demo-kzmlihs8qgbzf2usq43n.vusercontent.net");
     } finally {
       setVibeLoading(false);
     }
@@ -340,7 +314,10 @@ export default function Home() {
         </>
       )}
 
-
+      <PreviewModal
+        url={vibeDemoUrl}
+        onClose={() => setVibeDemoUrl(null)}
+      />
 
       <LoginModal
         isOpen={showLoginModal}

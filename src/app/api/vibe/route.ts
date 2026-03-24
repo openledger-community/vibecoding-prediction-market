@@ -39,34 +39,26 @@ export async function POST(request: Request) {
   ].join("\n");
 
   // POST to open_terminal_backend → triggers createProject + initChat + saves to DB
-  const backendApiUrl = process.env.BACKEND_API_URL || "http://127.0.0.1:4040";
-  console.log("Syncing with backend at:", backendApiUrl);
+  const backendRes = await fetch("http://localhost:4040/api/create_app", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      wallet: session.user.email,           // email passed as wallet (it's just a string ID)
+      name: body.displayName,
+      description: body.displayDescription,
+      user_prompt,
+      repo_url: "https://github.com/bethink/kalshi-template-ui",
+      repo_branch: "main",
+    }),
+  });
 
-  try {
-    const backendRes = await fetch(`${backendApiUrl}/api/create_app`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        wallet: session.user.email,
-        name: body.displayName,
-        description: body.displayDescription,
-        user_prompt,
-      }),
-    });
-
-    if (!backendRes.ok) {
-      const errorText = await backendRes.text();
-      console.error(`[vibe] Backend sync failed: ${backendRes.status} ${backendRes.statusText}`, errorText);
-      return NextResponse.json({ error: "Failed to create project on backend" }, { status: backendRes.status });
-    }
-
-    const result = await backendRes.json();
-    console.log("[vibe] Backend sync success:", result);
-
-    return NextResponse.json({ success: true, data: result.data });
-
-  } catch (backendError) {
-    console.error("[vibe] Failed to connect to backend:", backendError);
-    return NextResponse.json({ error: "Failed to connect to backend" }, { status: 500 });
+  if (!backendRes.ok) {
+    const err = await backendRes.json().catch(() => ({ error: "Backend error" }));
+    return NextResponse.json({ error: err.error || "Failed to create project" }, { status: backendRes.status });
   }
+
+  const result = await backendRes.json();
+  console.log("[vibe] backend response →", JSON.stringify(result));
+
+  return NextResponse.json({ success: true, data: result.data });
 }
