@@ -23,7 +23,7 @@ export default function VibeResult(props: VibeResultProps) {
                 loading={props.loading}
                 error={props.error}
                 chatTitle={props.chat?.title}
-                webUrl={props.chat?.latestVersion.demoUrl || props.chat?.latestVersion?.demoUrl}
+                webUrl={props.chat?.latestVersion?.demoUrl}
                 onClose={props.onClose}
                 userEmail={props.userEmail}
             />
