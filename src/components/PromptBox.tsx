@@ -61,20 +61,7 @@ export default function PromptBox({
         {/* Bottom Bar */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-
-            {/* Category Selector */}
-            <button
-              onClick={onCategoryClick}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/5 hover:bg-white/10 text-sm text-gray-300 transition-all active:scale-95"
-            >
-              <div className="w-5 h-5 bg-white/10 rounded flex items-center justify-center text-[10px]">
-                <FunnelIcon className="w-3 h-3" />
-              </div>
-              <span className="font-medium max-w-[120px] truncate">
-                {selectedCategory === "All" ? "Select Category" : selectedCategory}
-              </span>
-              <ChevronDownIcon className="w-4 h-4 text-gray-500" />
-            </button>
+            {/* Category selection hidden per user request */}
           </div>
 
           {/* Submit Button */}

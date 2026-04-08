@@ -5,6 +5,10 @@ import { useSession } from "next-auth/react";
 import { useRouter, useParams } from "next/navigation";
 import { ArrowPathIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import VibeResult from "@/components/VibeResult";
+import { fetchWithAuth } from "@/lib/fetchWithAuth";
+import { getWalletAuth } from "@/lib/walletAuth";
+
+const isWalletMode = process.env.NEXT_PUBLIC_AUTH_MODE === "walletconnect";
 
 interface App {
   uuid: string;
@@ -27,18 +31,12 @@ export default function AppDetailPage() {
   const [chatData, setChatData] = useState<any | null>(null);
 
   useEffect(() => {
-    if (status === "loading") return;
-    if (!session) {
-      router.push("/");
-      return;
-    }
-
     const init = async () => {
       setLoading(true);
       setError(null);
       try {
         // 1. Fetch App Details to get chat_id
-        const res = await fetch("/api/applications");
+        const res = await fetchWithAuth("/api/applications");
         if (!res.ok) throw new Error("Failed to fetch applications");
 
         const data = await res.json();
@@ -55,7 +53,7 @@ export default function AppDetailPage() {
         // 2. Fetch Chat History if chat_id exists
         if (foundApp.chat_id) {
           try {
-            const chatRes = await fetch(`/api/chat/${foundApp.chat_id}/history`);
+            const chatRes = await fetchWithAuth(`/api/chat/${foundApp.chat_id}/history`);
             if (chatRes.ok) {
               const chatHistory = await chatRes.json();
               setChatData(chatHistory.data);
@@ -73,10 +71,25 @@ export default function AppDetailPage() {
       }
     };
 
-    init();
+    if (isWalletMode) {
+      const walletData = getWalletAuth();
+      if (!walletData?.token) {
+        router.push("/");
+        return;
+      }
+      init();
+    } else {
+      if (status === "loading") return;
+      if (!session) {
+        router.push("/");
+        return;
+      }
+      init();
+    }
   }, [session, status, router, appId]);
 
-  if (status === "loading" || loading) {
+  const isLoadingUI = isWalletMode ? loading : (status === "loading" || loading);
+  if (isLoadingUI) {
     return (
       <div className="min-h-screen bg-[#06060c] flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">

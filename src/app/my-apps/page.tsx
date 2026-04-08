@@ -8,6 +8,10 @@ import {
   Squares2X2Icon,
   ArrowPathIcon,
 } from "@heroicons/react/24/outline";
+import { fetchWithAuth } from "@/lib/fetchWithAuth";
+import { getWalletAuth } from "@/lib/walletAuth";
+
+const isWalletMode = process.env.NEXT_PUBLIC_AUTH_MODE === "walletconnect";
 
 interface App {
   uuid: string;
@@ -28,20 +32,28 @@ export default function MyAppsPage() {
   const [viewMode, setViewMode] = useState<"table" | "tile">("table");
 
   useEffect(() => {
-    if (status === "loading") return;
-    if (!session) {
-      router.push("/");
-      return;
+    if (isWalletMode) {
+      const walletData = getWalletAuth();
+      if (!walletData?.token) {
+        router.push("/");
+        return;
+      }
+      fetchApps();
+    } else {
+      if (status === "loading") return;
+      if (!session) {
+        router.push("/");
+        return;
+      }
+      fetchApps();
     }
-
-    fetchApps();
   }, [session, status, router]);
 
   const fetchApps = async () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/applications");
+      const res = await fetchWithAuth("/api/applications");
       if (!res.ok) {
         const err = await res.json().catch(() => ({ error: "Failed to fetch apps" }));
         setError(err.error || "Failed to fetch apps");
@@ -57,7 +69,8 @@ export default function MyAppsPage() {
     }
   };
 
-  if (status === "loading" || loading) {
+  const isLoadingUI = isWalletMode ? loading : (status === "loading" || loading);
+  if (isLoadingUI) {
     return (
       <div className="min-h-screen bg-[#06060c] pt-24 px-6">
         <div className="max-w-7xl mx-auto">

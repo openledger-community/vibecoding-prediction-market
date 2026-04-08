@@ -24,7 +24,7 @@ export default function VibeCodingForm({ categoryTags, onSubmit, loading, onCanc
   return (
     <div className="w-full max-w-4xl mx-auto px-4 py-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
       {/* Back Button */}
-      <button
+      {/* <button
         onClick={onCancel}
         className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors mb-8 group"
       >
@@ -34,7 +34,7 @@ export default function VibeCodingForm({ categoryTags, onSubmit, loading, onCanc
           </svg>
         </div>
         <span className="font-bold text-sm">Back to results</span>
-      </button>
+      </button> */}
 
       <div className="bg-[#111218]/80 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden">
         {/* Animated background glow */}
@@ -51,7 +51,7 @@ export default function VibeCodingForm({ categoryTags, onSubmit, loading, onCanc
             {/* Form Fields Stack (Single Column) */}
             <div className="space-y-8">
               {/* Context */}
-              <div className="space-y-3">
+              {/* <div className="space-y-3">
                 <label className="text-[10px] font-bold uppercase tracking-widest text-indigo-400 px-1">Target Context</label>
                 <div className="flex flex-wrap items-center gap-2 p-4 bg-white/5 rounded-2xl border border-white/5 backdrop-blur-sm">
                   <span className="bg-indigo-500 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">{category}</span>
@@ -59,7 +59,7 @@ export default function VibeCodingForm({ categoryTags, onSubmit, loading, onCanc
                     <span key={t} className="bg-white/10 text-gray-300 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">{t}</span>
                   ))}
                 </div>
-              </div>
+              </div> */}
 
               {/* Stacked Input Fields (One by One) */}
               <div className="space-y-8">

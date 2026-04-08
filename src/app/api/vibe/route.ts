@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/auth";
+import { getServerAuth } from "@/lib/serverAuth";
 import type { VibePayload } from "@/lib/types";
 
 export async function POST(request: Request) {
-  const session = await auth();
-  if (!session?.user?.email) {
+  const { wallet, token, authenticated } = await getServerAuth(request);
+  if (!authenticated || !wallet) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
   }
 
@@ -43,11 +43,20 @@ export async function POST(request: Request) {
   console.log("Syncing with backend at:", backendApiUrl);
 
   try {
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
+    // Forward wallet auth token to backend if in wallet mode
+    if (token) {
+      headers["Authorization"] = token;
+      headers["x-wallet-address"] = wallet;
+    }
+
     const backendRes = await fetch(`${backendApiUrl}/api/create_app`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers,
       body: JSON.stringify({
-        wallet: session.user.email,
+        wallet,
         name: body.displayName,
         description: body.displayDescription,
         user_prompt,

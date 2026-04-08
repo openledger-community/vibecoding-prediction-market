@@ -8,6 +8,10 @@ import MarketSkeleton from "@/components/MarketSkeleton";
 import CategoryPicker from "@/components/CategoryPicker";
 import VibeCodingForm from "@/components/VibeCodingForm";
 import type { Taxonomy, Market, DesignPatternId, CategoryTags } from "@/lib/types";
+import { getWalletAuth } from "@/lib/walletAuth";
+import { fetchWithAuth } from "@/lib/fetchWithAuth";
+
+const isWalletMode = process.env.NEXT_PUBLIC_AUTH_MODE === "walletconnect";
 
 import NavigationTabs from "@/components/NavigationTabs";
 import StatsRow from "@/components/StatsRow";
@@ -56,6 +60,8 @@ export default function Home() {
     categoryCounts: Record<string, number>;
   } | null>(null);
 
+  const [isPromptSearch, setIsPromptSearch] = useState(false);
+
   useEffect(() => {
     fetch("/api/taxonomy")
       .then((r) => r.json())
@@ -91,7 +97,7 @@ export default function Home() {
     setCurrentDescription(displayDescription);
 
     try {
-      const res = await fetch("/api/vibe", {
+      const res = await fetchWithAuth("/api/vibe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -134,7 +140,8 @@ export default function Home() {
   };
 
   const doSearch = async (body: Record<string, unknown>) => {
-    if (!session) {
+    const authed = isWalletMode ? !!getWalletAuth()?.token : !!session;
+    if (!authed) {
       setShowLoginModal(true);
       return;
     }
@@ -143,7 +150,7 @@ export default function Home() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/search", {
+      const res = await fetchWithAuth("/api/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -172,15 +179,17 @@ export default function Home() {
   };
 
   const handlePromptSubmit = async () => {
-    if (!session) {
+    const authed = isWalletMode ? !!getWalletAuth()?.token : !!session;
+    if (!authed) {
       setShowLoginModal(true);
       return;
     }
     if (!prompt.trim()) return;
+    setIsPromptSearch(true);
     setLoading(true);
     reset();
     try {
-      const res = await fetch("/api/search", {
+      const res = await fetchWithAuth("/api/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -203,11 +212,13 @@ export default function Home() {
       } else {
         setCategoryTags(data.category_tags);
         setMarkets(data.markets);
+        setShowVibeForm(true);
       }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Network error");
     } finally {
       setLoading(false);
+      setIsPromptSearch(false);
     }
   };
 
@@ -222,7 +233,7 @@ export default function Home() {
 
 
   // True when we have any search output (results, error, fallback, or in-flight)
-  const hasSearchOutput = markets !== null || fallback || error || loading;
+  const hasSearchOutput = markets !== null || fallback || error || (loading && !isPromptSearch);
 
   return (
     <main className="h-screen bg-[#06060c] text-white flex flex-col items-center overflow-hidden">
@@ -246,13 +257,13 @@ export default function Home() {
           />
 
           <div className="w-full mt-4">
-            <StatsRow
+            {/* <StatsRow
               totalMarkets={
                 taxonomyData
                   ? Object.values(taxonomyData.categoryCounts).reduce((a, b) => a + b, 0)
                   : undefined
               }
-            />
+            /> */}
           </div>
         </div>
       ) : (

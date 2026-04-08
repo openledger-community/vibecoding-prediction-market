@@ -9,7 +9,7 @@ export async function GET() {
 
   // Fetch all apps for this user from the backend
   const backendApiUrl = process.env.BACKEND_API_URL || "http://localhost:4040";
-  
+
   try {
     console.log("session.user.email", session.user.email);
     const backendRes = await fetch(`${backendApiUrl}/api/applications?wallet=${encodeURIComponent(session.user.email)}`, {
@@ -18,7 +18,7 @@ export async function GET() {
     });
 
     console.log("session.user.email", session.user.email);
-    
+
 
     if (!backendRes.ok) {
       const err = await backendRes.json().catch(() => ({ error: "Backend error" }));
@@ -26,7 +26,7 @@ export async function GET() {
     }
 
     const result = await backendRes.json();
-    
+
     return NextResponse.json({ success: true, apps: result.data || [] });
   } catch (error) {
     console.error("[apps] Error fetching apps:", error);

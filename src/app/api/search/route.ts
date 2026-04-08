@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/auth";
+import { getServerAuth } from "@/lib/serverAuth";
 import { fetchTaxonomy, fetchOpenMarkets } from "@/lib/kalshi";
 import { classifyPrompt } from "@/lib/openai";
 import type { SearchBody, Taxonomy } from "@/lib/types";
 
 // Validate & clamp category/tags against the real taxonomy.
-// Returns the validated category and tags (only tags that actually exist).
 function validateAgainstTaxonomy(
   category: string,
   tags: string[],
@@ -18,13 +17,11 @@ function validateAgainstTaxonomy(
 
   const allowedTags = taxonomy[validCategory];
   if (!allowedTags) {
-    // Category exists but has no tags (e.g. Elections, Mentions, Social)
     return { category: validCategory, tags: [] };
   }
 
   const allowedSet = new Set(allowedTags.map((t) => t.toLowerCase()));
   const validTags = tags.filter((t) => allowedSet.has(t.toLowerCase()));
-  // Re-map to the canonical casing from taxonomy
   const canonicalTags = validTags.map(
     (t) => allowedTags.find((a) => a.toLowerCase() === t.toLowerCase()) || t
   );
@@ -33,8 +30,8 @@ function validateAgainstTaxonomy(
 }
 
 export async function POST(request: Request) {
-  const session = await auth();
-  if (!session) {
+  const { authenticated } = await getServerAuth(request);
+  if (!authenticated) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
   }
 
@@ -59,7 +56,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ fallback: true, taxonomy });
     }
 
-    // Validate LLM output against real taxonomy
     const validated = validateAgainstTaxonomy(
       classification.category,
       classification.tags,
@@ -67,7 +63,6 @@ export async function POST(request: Request) {
     );
 
     if (!validated) {
-      // LLM hallucinated a bad category — treat as fallback
       return NextResponse.json({ fallback: true, taxonomy });
     }
 
@@ -91,7 +86,6 @@ export async function POST(request: Request) {
     return NextResponse.json(result);
   }
 
-  // Neither prompt nor category provided
   return NextResponse.json(
     { error: "Provide either 'prompt' or 'category' in the body" },
     { status: 400 }
