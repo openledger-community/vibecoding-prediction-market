@@ -51,7 +51,7 @@ export default function Header() {
                         O
                     </div>
                     <h1 className="text-xl font-bold tracking-tight">
-                        Open <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Prediction Platform</span>
+                        Vibcoding <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Prep-dex</span>
                     </h1>
                 </Link>
 

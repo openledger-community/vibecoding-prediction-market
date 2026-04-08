@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/auth";
+import { getServerAuth } from "@/lib/serverAuth";
 
-export async function GET() {
-  const session = await auth();
-  if (!session?.user?.email) {
+export async function GET(request: Request) {
+  const { wallet, token, authenticated } = await getServerAuth(request);
+  if (!authenticated || !wallet) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
   }
 
@@ -11,14 +11,18 @@ export async function GET() {
   const backendApiUrl = process.env.BACKEND_API_URL || "http://localhost:4040";
 
   try {
-    console.log("session.user.email", session.user.email);
-    const backendRes = await fetch(`${backendApiUrl}/api/applications?wallet=${encodeURIComponent(session.user.email)}`, {
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+      "x-wallet-address": wallet,
+    };
+    if (token) {
+      headers["Authorization"] = token;
+    }
+
+    const backendRes = await fetch(`${backendApiUrl}/api/applications?wallet=${encodeURIComponent(wallet)}`, {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers,
     });
-
-    console.log("session.user.email", session.user.email);
-
 
     if (!backendRes.ok) {
       const err = await backendRes.json().catch(() => ({ error: "Backend error" }));
