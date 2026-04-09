@@ -61,7 +61,12 @@ export default function Home() {
   } | null>(null);
 
   const [isPromptSearch, setIsPromptSearch] = useState(false);
-
+  const [mounted, setMounted] = useState(false);
+ 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+ 
   useEffect(() => {
     fetch("/api/taxonomy")
       .then((r) => r.json())
@@ -242,10 +247,10 @@ export default function Home() {
         <div className="flex-1 w-full max-w-7xl px-6 flex flex-col items-center justify-center animate-in fade-in duration-700">
           <div className="text-center mb-10">
             <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4 text-white">
-              What do you want to <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">create?</span>
+              What do you want to <span suppressHydrationWarning className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">build?</span>
             </h2>
           </div>
-
+ 
           <PromptBox
             prompt={prompt}
             onChange={setPrompt}
@@ -255,16 +260,50 @@ export default function Home() {
             onCategoryClick={() => setShowCategoryModal(true)}
             hideDisclaimer={false}
           />
-
-          <div className="w-full mt-4">
-            {/* <StatsRow
-              totalMarkets={
-                taxonomyData
-                  ? Object.values(taxonomyData.categoryCounts).reduce((a, b) => a + b, 0)
-                  : undefined
-              }
-            /> */}
-          </div>
+ 
+          {mounted && (
+            <div className="w-full mt-16 max-w-5xl mx-auto px-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {[
+                  {
+                    title: "Define Protocol",
+                    desc: "Describe your custom perpetual DEX requirements in natural language.",
+                    icon: (
+                      <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                      </svg>
+                    )
+                  },
+                  {
+                    title: "AI Generation",
+                    desc: "Vibe Code automatically scaffolds high-performance trading interfaces.",
+                    icon: (
+                      <svg className="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    )
+                  },
+                  {
+                    title: "One-Click Deploy",
+                    desc: "Review your protocol and launch your custom DEX to the cloud instantly.",
+                    icon: (
+                      <svg className="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    )
+                  }
+                ].map((feature, i) => (
+                  <div key={i} className="group p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] hover:border-white/10 transition-all duration-300">
+                    <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                      {feature.icon}
+                    </div>
+                    <h3 className="text-white font-bold mb-2 tracking-tight">{feature.title}</h3>
+                    <p className="text-slate-500 text-xs leading-relaxed">{feature.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         /* ── SEARCH / RESULTS STATE (Split Layout) ────────────────────────── */

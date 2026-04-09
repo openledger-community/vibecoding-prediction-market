@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { ChatMessages } from "../chat/chat-messages";
 import { ChatInput } from "../chat/chat-input";
 import { PreviewPanel } from "../chat/preview-panel";
+import { fetchWithAuth } from "@/lib/fetchWithAuth";
 
 import { ChevronDoubleLeftIcon, ChatBubbleLeftRightIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
@@ -56,7 +57,7 @@ export function ChatDetailClient({
                     // Only show loading if we don't have messages yet
                     if (initialMessages.length === 0) setLoading(true);
 
-                    const res = await fetch(`/api/chat/${chatId}/history`);
+                    const res = await fetchWithAuth(`/api/chat/${chatId}/history`);
                     if (res.ok) {
                         const rawData = await res.json();
                         console.log("Raw History Response:", rawData);
@@ -132,11 +133,10 @@ export function ChatDetailClient({
         ]);
 
         try {
-            const res = await fetch("/api/chat", {
+            const res = await fetchWithAuth("/api/chat", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "x-wallet-address": userEmail || "0x0000000000000000000000000000000000000000"
                 },
                 body: JSON.stringify({
                     chat_id: chatId,
@@ -191,8 +191,8 @@ export function ChatDetailClient({
             <div className="h-12 flex items-center justify-between px-4 border-b border-white/5 bg-[#0d0f16]/80 backdrop-blur-sm shrink-0">
                 <div className="flex items-center gap-2">
                     <ChatBubbleLeftRightIcon className="w-4 h-4 text-blue-400" />
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                        Neural Engine
+                    <span className="text-[10px] font-bold text-slate-400 tracking-widest">
+                        THOUGHT PROCESS
                     </span>
                 </div>
                 <button
@@ -237,7 +237,7 @@ export function ChatDetailClient({
             files={files}
         />
     );
-
+    console.log("chatTitle", chatTitle)
     return (
         <div className="flex flex-col h-full animate-in fade-in duration-300">
             {/* ── GLOBAL HEADER ── */}
@@ -250,10 +250,9 @@ export function ChatDetailClient({
                         <XMarkIcon className="w-5 h-5" />
                     </button>
                     <div className="flex flex-col">
-                        <span className="text-xs font-bold text-slate-100 uppercase tracking-tight">
-                            {chatTitle || initialDescription || "Vibe Coding Session"}
+                        <span className="text-sm font-bold text-slate-100 tracking-tight">
+                            {chatTitle || initialDescription || "platform"}
                         </span>
-                        <span className="text-[9px] text-slate-500 font-mono tracking-tighter uppercase">Deployment Instance active</span>
                     </div>
                     {loading && (
                         <span className="flex items-center gap-2 text-xs text-blue-400 font-bold uppercase tracking-widest px-3 py-1 bg-blue-500/10 rounded-lg border border-blue-500/20 shadow-inner translate-y-[-1px]">

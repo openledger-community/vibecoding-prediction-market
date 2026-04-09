@@ -27,7 +27,13 @@ export default function PromptBox({
   onCategoryClick,
   hideDisclaimer = false
 }: PromptBoxProps) {
+  const [mounted, setMounted] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Handle hydration
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Auto-resize textarea
   useEffect(() => {
@@ -46,16 +52,16 @@ export default function PromptBox({
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      <div className="relative group bg-[#0d0f16]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 transition-all focus-within:border-blue-500/50 focus-within:ring-4 focus-within:ring-blue-500/10 shadow-2xl">
+      <div className={`relative group backdrop-blur-2xl rounded-2xl p-4 transition-all focus-within:ring-4 focus-within:ring-blue-500/10 shadow-2xl ${mounted ? 'bg-slate-900/60 border-white/20 focus-within:border-blue-500/50' : 'bg-[#0d0f16]/80 border-white/10'}`}>
         {/* Text Area */}
         <textarea
           ref={textareaRef}
           value={prompt}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Search markets or profiles..."
+          placeholder={mounted ? "Describe your perpetual DEX protocol requirements and start vibe coding..." : "Search markets or profiles..."}
           rows={1}
-          className="w-full bg-transparent text-slate-100 placeholder-slate-500 text-lg resize-none focus:outline-none min-h-[40px] max-h-[200px] mb-4"
+          className={`w-full bg-transparent text-slate-100 text-lg resize-none focus:outline-none min-h-[40px] max-h-[200px] mb-4 ${mounted ? 'placeholder-slate-400' : 'placeholder-slate-500'}`}
         />
 
         {/* Bottom Bar */}
@@ -84,7 +90,7 @@ export default function PromptBox({
 
       {!hideDisclaimer && (
         <p className="text-center text-[11px] text-slate-500 mt-4 tracking-tight font-medium">
-          Predictions are market-based. Always check the primary source for verification.
+          {mounted ? "Vibe generated content. Always verify before use." : "Predictions are market-based. Always check the primary source for verification."}
         </p>
       )}
     </div>

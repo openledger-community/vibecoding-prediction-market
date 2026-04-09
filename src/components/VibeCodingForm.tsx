@@ -43,8 +43,8 @@ export default function VibeCodingForm({ categoryTags, onSubmit, loading, onCanc
 
         <div className="relative z-10">
           <div className="mb-10">
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-100 mb-2">Vibe <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Coding</span></h2>
-            <p className="text-slate-400 text-sm max-w-md">Design and deploy your custom prediction market dashboard.</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-100 mb-2">Vibe <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Protocol</span></h2>
+            <p className="text-slate-400 text-sm">Architect and launch your high-performance perpetual trading interface.</p>
           </div>
 
           <div className="space-y-8">
@@ -58,7 +58,7 @@ export default function VibeCodingForm({ categoryTags, onSubmit, loading, onCanc
                     type="text"
                     value={displayName}
                     onChange={(e) => setDisplayName(e.target.value)}
-                    placeholder="e.g. Trump Election Tracker"
+                    placeholder=""
                     className="w-full bg-white/5 border border-white/10 text-slate-100 rounded-2xl px-6 py-4 text-sm font-medium placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all shadow-inner"
                   />
                 </div>
@@ -69,7 +69,7 @@ export default function VibeCodingForm({ categoryTags, onSubmit, loading, onCanc
                     type="text"
                     value={displayDescription}
                     onChange={(e) => setDisplayDescription(e.target.value)}
-                    placeholder="e.g. Trump election dynamics..."
+                    placeholder=""
                     className="w-full bg-white/5 border border-white/10 text-slate-100 rounded-2xl px-6 py-4 text-sm font-medium placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all shadow-inner"
                   />
                 </div>

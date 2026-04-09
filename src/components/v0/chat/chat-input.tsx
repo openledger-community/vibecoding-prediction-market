@@ -45,7 +45,7 @@ export function ChatInput({
                         ref={inputRef}
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
-                        placeholder="Refine technical specifications..."
+                        placeholder="Ask a follow-up..."
                         disabled={isLoading}
                         className="min-h-[64px] max-h-[200px] text-sm text-slate-200 placeholder:text-slate-600 font-medium"
                     />
@@ -64,10 +64,8 @@ export function ChatInput({
                         />
                     </PromptInputToolbar>
                 </PromptInput>
-                <div className="text-[9px] text-slate-600 text-center mt-4 font-bold uppercase tracking-widest italic flex items-center justify-center gap-2">
-                    <div className="w-1 h-1 rounded-full bg-slate-700"></div>
-                    Neural output generated • Verification recommended
-                    <div className="w-1 h-1 rounded-full bg-slate-700"></div>
+                <div className="text-[10px] text-slate-500 text-center mt-4 font-medium flex items-center justify-center gap-2">
+                    Vibe generated content. verify before use.
                 </div>
             </div>
         </div>

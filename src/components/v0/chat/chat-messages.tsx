@@ -75,19 +75,18 @@ export function ChatMessages({
 
     if (messages.length === 0 && !currentChatId) {
         return (
-            <div className="flex flex-col items-center justify-center h-full space-y-10 p-8">
-                <div className="text-center space-y-3">
-                    <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent tracking-tight">
-                        Neural Synthesis Engine
+            <div className="flex flex-col items-center justify-center h-full space-y-12 p-8">
+                <div className="text-center">
+                    <h1 className="text-4xl md:text-5xl font-bold text-white mb-10 tracking-tight leading-tight">
+                        What protocol would you <br /> like to build?
                     </h1>
-                    <p className="text-slate-500 font-medium tracking-wide text-xs uppercase">What shall we architect today?</p>
                 </div>
                 {setInput && (
-                    <Suggestions className="max-w-xl">
-                        <Suggestion onClick={() => setInput("Automate market analytics")} suggestion="Market Analytics" />
-                        <Suggestion onClick={() => setInput("Build a liquidity dashboard")} suggestion="Liquidity Dashboard" />
-                        <Suggestion onClick={() => setInput("Design a prediction interface")} suggestion="Interface Design" />
-                        <Suggestion onClick={() => setInput("Generate sentiment reports")} suggestion="Sentiment Reports" />
+                    <Suggestions className="max-w-2xl">
+                        <Suggestion onClick={() => setInput("Create a dashboard")} suggestion="Create a dashboard" />
+                        <Suggestion onClick={() => setInput("Build a todo app")} suggestion="Build a todo app" />
+                        <Suggestion onClick={() => setInput("Design a landing page")} suggestion="Design a landing page" />
+                        <Suggestion onClick={() => setInput("Make a calculator")} suggestion="Make a calculator" />
                     </Suggestions>
                 )}
             </div>

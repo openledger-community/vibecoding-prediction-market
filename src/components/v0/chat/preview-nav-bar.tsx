@@ -45,7 +45,7 @@ export function PreviewNavBar({
             {/* URL Bar */}
             <div className="flex-1 flex items-center gap-3 bg-[#161a24]/60 border border-white/5 rounded-lg px-4 py-1.5 min-w-0 shadow-inner group focus-within:ring-1 focus-within:ring-blue-500/30 transition-all">
                 <GlobeAltIcon className="w-3.5 h-3.5 text-slate-500 shrink-0 group-hover:text-blue-400 transition-colors" />
-                <span className="text-[10px] text-slate-400 truncate font-bold uppercase tracking-widest leading-none">
+                <span className="text-[10px] text-slate-400 truncate leading-none">
                     {url || "awaiting genesis block..."}
                 </span>
                 {loading && (
