@@ -19,17 +19,17 @@ export default function StatsRow({ totalMarkets }: StatsRowProps) {
   ];
 
   return (
-    <div className="w-full max-w-4xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12 mt-8">
+    <div className="w-full max-w-4xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4 mb-16 mt-8">
       {stats.map((stat) => (
-        <div key={stat.label} className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-colors">
-          <h3 className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-2">{stat.label}</h3>
-          <div className="text-2xl font-bold text-white mb-1">{stat.value}</div>
+        <div key={stat.label} className="bg-[#0d0f16]/40 backdrop-blur-md border border-white/5 rounded-2xl p-6 hover:bg-[#161a24]/60 hover:border-blue-500/30 transition-all duration-300 shadow-lg group">
+          <h3 className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-3 group-hover:text-slate-400 transition-colors">{stat.label}</h3>
+          <div className="text-2xl font-bold text-slate-100 mb-1.5 group-hover:text-white transition-colors">{stat.value}</div>
           {stat.change ? (
-            <div className={`text-xs font-medium ${stat.positive ? "text-emerald-400" : "text-red-400"}`}>
-              {stat.change} <span className="text-gray-500 font-normal">this week</span>
+            <div className={`text-xs font-bold ${stat.positive ? "text-emerald-400" : "text-rose-400"} flex items-center gap-1`}>
+              {stat.change} <span className="text-slate-600 font-medium">this week</span>
             </div>
           ) : (
-            <div className="text-xs text-gray-500">{stat.sub}</div>
+            <div className="text-xs text-slate-500 font-medium">{stat.sub}</div>
           )}
         </div>
       ))}

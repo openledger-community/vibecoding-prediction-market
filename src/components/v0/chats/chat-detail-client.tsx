@@ -186,18 +186,18 @@ export function ChatDetailClient({
 
     // ─── LEFT PANEL: Chat ─────────────────────────────────────────────
     const chatPanel = (
-        <div className="flex flex-col h-full bg-[#0a0a0f]">
+        <div className="flex flex-col h-full bg-[#0d0f16]">
             {/* Header */}
-            <div className="h-12 flex items-center justify-between px-4 border-b border-white/5 bg-[#0a0a0f]/80 backdrop-blur-sm shrink-0">
+            <div className="h-12 flex items-center justify-between px-4 border-b border-white/5 bg-[#0d0f16]/80 backdrop-blur-sm shrink-0">
                 <div className="flex items-center gap-2">
-                    <ChatBubbleLeftRightIcon className="w-4 h-4 text-indigo-400" />
-                    <span className="text-xs font-semibold text-gray-300 uppercase tracking-wider">
-                        Thought Process
+                    <ChatBubbleLeftRightIcon className="w-4 h-4 text-blue-400" />
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                        Neural Engine
                     </span>
                 </div>
                 <button
                     onClick={() => setChatCollapsed(true)}
-                    className="p-1.5 text-gray-500 hover:text-white hover:bg-white/10 rounded-md transition-colors"
+                    className="p-1.5 text-slate-500 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
                     title="Collapse Chat"
                 >
                     <ChevronDoubleLeftIcon className="w-4 h-4" />
@@ -241,24 +241,27 @@ export function ChatDetailClient({
     return (
         <div className="flex flex-col h-full animate-in fade-in duration-300">
             {/* ── GLOBAL HEADER ── */}
-            <div className="h-14 border-b border-white/5 flex items-center justify-between px-4 bg-[#06060c] z-20 shrink-0">
-                <div className="flex items-center gap-3">
+            <div className="h-14 border-b border-white/5 flex items-center justify-between px-4 bg-[#06070a] z-20 shrink-0 shadow-lg">
+                <div className="flex items-center gap-4">
                     <button
                         onClick={onClose}
-                        className="p-1.5 hover:bg-white/10 rounded-full text-gray-400 hover:text-white transition-colors"
+                        className="p-1.5 hover:bg-white/10 rounded-full text-slate-500 hover:text-white transition-colors border border-white/5"
                     >
                         <XMarkIcon className="w-5 h-5" />
                     </button>
-                    <span className="text-sm font-semibold text-gray-300">
-                        {chatTitle || initialDescription || "Vibe Coding Session"}
-                    </span>
+                    <div className="flex flex-col">
+                        <span className="text-xs font-bold text-slate-100 uppercase tracking-tight">
+                            {chatTitle || initialDescription || "Vibe Coding Session"}
+                        </span>
+                        <span className="text-[9px] text-slate-500 font-mono tracking-tighter uppercase">Deployment Instance active</span>
+                    </div>
                     {loading && (
-                        <span className="flex items-center gap-1.5 text-xs text-indigo-400 font-mono">
-                            <span className="relative flex h-1.5 w-1.5">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75" />
-                                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-indigo-500" />
+                        <span className="flex items-center gap-2 text-xs text-blue-400 font-bold uppercase tracking-widest px-3 py-1 bg-blue-500/10 rounded-lg border border-blue-500/20 shadow-inner translate-y-[-1px]">
+                            <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
                             </span>
-                            Generating
+                            Synthesizing
                         </span>
                     )}
                 </div>
@@ -267,15 +270,15 @@ export function ChatDetailClient({
             <div className="flex-1 overflow-hidden flex">
                 <div
                     className={`
-                        border-r border-white/5 bg-[#0a0a0f] transition-all duration-300 ease-in-out relative
-                        ${chatCollapsed ? "w-0 opacity-0" : "w-[30%] min-w-[300px] max-w-[500px] opacity-100"}
+                        border-r border-white/5 bg-[#0d0f16] transition-all duration-300 ease-in-out relative
+                        ${chatCollapsed ? "w-0 opacity-0" : "w-[30%] min-w-[320px] max-w-[500px] opacity-100"}
                     `}
                 >
                     <div className="absolute inset-0 w-full h-full">
                         {chatPanel}
                     </div>
                 </div>
-                <div className="flex-1 min-w-0 bg-black relative">
+                <div className="flex-1 min-w-0 bg-[#06070a] relative">
                     {rightPanel}
                 </div>
             </div>

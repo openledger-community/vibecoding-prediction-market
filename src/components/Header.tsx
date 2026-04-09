@@ -11,12 +11,15 @@ import {
     HomeIcon
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { getWalletAuth } from "@/lib/walletAuth";
+import logoIcon from "@/assets/images/logo-icon.svg";
 
 const isWalletMode = process.env.NEXT_PUBLIC_AUTH_MODE === "walletconnect";
 
 export default function Header() {
     const { data: session, status } = useSession();
+    const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -43,15 +46,20 @@ export default function Header() {
     const showMyApps = isWalletMode ? walletAuthenticated : !!session;
 
     return (
-        <header className="fixed top-0 left-0 right-0 z-50 bg-[#06060c]/80 backdrop-blur-md border-b border-white/5">
+        <header className="fixed top-0 left-0 right-0 z-50 glass-panel-heavy border-b border-white/5">
             <div className="w-full px-6 h-16 flex items-center justify-between">
                 {/* Logo Section */}
-                <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                    <div className="w-8 h-8 bg-gradient-to-r from-indigo-400 to-purple-400 rounded-lg flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/20">
-                        O
+                <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                    <div className="relative w-8 h-8 flex items-center justify-center">
+                        <img
+                            src={logoIcon.src}
+                            alt="Logo"
+                            className="w-full h-full"
+                        />
+                        <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full -z-10 animate-premium-glow"></div>
                     </div>
-                    <h1 className="text-xl font-bold tracking-tight">
-                        Vibcoding <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Prep-dex</span>
+                    <h1 className="text-xl font-bold tracking-tight text-slate-100 hidden sm:block">
+                        Vibcoding <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Prep-dex</span>
                     </h1>
                 </Link>
 
@@ -59,22 +67,30 @@ export default function Header() {
                 <div className="flex items-center gap-3">
                     {/* My Apps Link - Only show when authenticated */}
                     {showMyApps && (
-                        <>
+                        <nav className="flex items-center bg-white/[0.03] border border-white/5 rounded-2xl p-1 backdrop-blur-md">
                             <Link
                                 href="/"
-                                className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all"
+                                className={`flex items-center gap-2 px-4 py-1.5 text-sm font-semibold rounded-xl transition-all duration-300 active:scale-95 ${
+                                    pathname === "/" 
+                                    ? "bg-blue-500/10 text-blue-400 shadow-[inset_0_0_12px_rgba(59,130,246,0.1)] border border-blue-500/20" 
+                                    : "text-slate-400 hover:text-slate-100 hover:bg-white/5 border border-transparent"
+                                }`}
                             >
-                                <HomeIcon className="w-4 h-4" />
-                                Home
+                                <HomeIcon className={`w-4 h-4 ${pathname === "/" ? "text-blue-400" : "text-slate-500 group-hover:text-slate-300"}`} />
+                                <span>Home</span>
                             </Link>
                             <Link
                                 href="/my-apps"
-                                className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all"
+                                className={`flex items-center gap-2 px-4 py-1.5 text-sm font-semibold rounded-xl transition-all duration-300 active:scale-95 ${
+                                    pathname === "/my-apps" 
+                                    ? "bg-blue-500/10 text-blue-400 shadow-[inset_0_0_12px_rgba(59,130,246,0.1)] border border-blue-500/20" 
+                                    : "text-slate-400 hover:text-slate-100 hover:bg-white/5 border border-transparent"
+                                }`}
                             >
-                                <RectangleStackIcon className="w-4 h-4" />
-                                My Apps
+                                <RectangleStackIcon className={`w-4 h-4 ${pathname === "/my-apps" ? "text-blue-400" : "text-slate-500 group-hover:text-slate-300"}`} />
+                                <span>My Apps</span>
                             </Link>
-                        </>
+                        </nav>
                     )}
 
                     {/* ── WalletConnect auth slot ── */}
@@ -92,7 +108,7 @@ export default function Header() {
                                         className="flex items-center gap-3 p-1 pr-3 rounded-full hover:bg-white/5 transition-all text-left group"
                                     >
                                         {/* Avatar */}
-                                        <div className="w-10 h-10 rounded-full overflow-hidden border border-white/10 flex items-center justify-center bg-indigo-600 group-hover:border-white/20 transition-all">
+                                        <div className="w-10 h-10 rounded-full overflow-hidden border border-white/10 flex items-center justify-center bg-blue-600 group-hover:border-white/20 transition-all">
                                             {session.user?.image ? (
                                                 <img src={session.user.image} alt="User" className="w-full h-full object-cover" />
                                             ) : (
@@ -102,29 +118,29 @@ export default function Header() {
 
                                         {/* Name/Email Stack */}
                                         <div className="hidden sm:flex flex-col">
-                                            <span className="text-sm font-semibold text-white group-hover:text-indigo-300 transition-colors">
+                                            <span className="text-sm font-semibold text-slate-200 group-hover:text-blue-400 transition-colors">
                                                 {session.user?.name}
                                             </span>
-                                            <span className="text-[10px] text-gray-500 truncate max-w-[150px]">
+                                            <span className="text-[10px] text-slate-500 truncate max-w-[150px]">
                                                 {session.user?.email}
                                             </span>
                                         </div>
-                                        <ChevronDownIcon className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${isMenuOpen ? "rotate-180" : ""}`} />
+                                        <ChevronDownIcon className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${isMenuOpen ? "rotate-180" : ""}`} />
                                     </button>
 
                                     {/* Dropdown Menu */}
                                     {isMenuOpen && (
-                                        <div className="absolute right-0 mt-2 w-56 bg-[#111218] border border-white/10 rounded-xl shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2">
+                                        <div className="absolute right-0 mt-2 w-56 bg-[#0d0f16] border border-white/10 rounded-xl shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2">
                                             <div className="px-4 py-3 border-b border-white/5 sm:hidden">
                                                 <p className="text-sm font-bold text-white truncate">{session.user?.name}</p>
-                                                <p className="text-xs text-gray-500 truncate">{session.user?.email}</p>
+                                                <p className="text-xs text-slate-500 truncate">{session.user?.email}</p>
                                             </div>
 
-                                            <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white transition-colors">
+                                            <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-400 hover:bg-white/5 hover:text-white transition-colors">
                                                 <Cog8ToothIcon className="w-4 h-4" />
                                                 Settings
                                             </button>
-                                            <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white transition-colors">
+                                            <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-400 hover:bg-white/5 hover:text-white transition-colors">
                                                 <QuestionMarkCircleIcon className="w-4 h-4" />
                                                 Help
                                             </button>
@@ -142,7 +158,7 @@ export default function Header() {
                             ) : (
                                 <button
                                     onClick={() => signIn("google")}
-                                    className="px-4 py-2 rounded-lg bg-white text-black text-sm font-bold hover:bg-gray-200 transition-all flex items-center gap-2 active:scale-95"
+                                    className="px-4 py-2 rounded-lg bg-white text-black text-sm font-bold hover:bg-slate-200 transition-all flex items-center gap-2 active:scale-95"
                                 >
                                     <svg className="w-4 h-4" viewBox="0 0 24 24">
                                         <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -158,6 +174,7 @@ export default function Header() {
                 </div>
             </div>
         </header>
+
     );
 }
 

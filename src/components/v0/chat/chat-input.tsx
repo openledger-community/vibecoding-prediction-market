@@ -34,10 +34,10 @@ export function ChatInput({
     }, [onSubmit, attachments]);
 
     return (
-        <div className="p-4 bg-[#0a0a0f] border-t border-white/5">
+        <div className="p-6 bg-[#0d0f16] border-t border-white/5">
             <div className="max-w-3xl mx-auto">
                 <PromptInput
-                    className="relative bg-white/5 border border-white/10 rounded-2xl p-0 focus-within:ring-1 focus-within:ring-white/20 transition-all overflow-hidden"
+                    className="relative bg-[#161a24]/40 backdrop-blur-md border border-white/5 rounded-2xl p-0 focus-within:ring-1 focus-within:ring-blue-500/30 transition-all overflow-hidden shadow-2xl"
                     onSubmit={handleSubmit}
                     onImageDrop={(files) => console.log("files dropped", files)}
                 >
@@ -45,27 +45,29 @@ export function ChatInput({
                         ref={inputRef}
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
-                        placeholder="Ask a follow-up..."
+                        placeholder="Refine technical specifications..."
                         disabled={isLoading}
-                        className="min-h-[60px] max-h-[200px] text-base"
+                        className="min-h-[64px] max-h-[200px] text-sm text-slate-200 placeholder:text-slate-600 font-medium"
                     />
-                    <PromptInputToolbar className="bg-transparent px-2 pb-2">
+                    <PromptInputToolbar className="bg-transparent px-3 pb-3">
                         <PromptInputTools>
                             <PromptInputImageButton
                                 onImageSelect={(files) => console.log("files selected", files)}
-                                className="text-gray-400 hover:text-white"
+                                className="text-slate-500 hover:text-blue-400 transition-colors"
                             />
                         </PromptInputTools>
                         <PromptInputSubmit
                             disabled={!message.trim() || isLoading}
                             status={isLoading ? "streaming" : "ready"}
                             size="icon"
-                            className="w-8 h-8"
+                            className={`w-9 h-9 transition-all ${!message.trim() || isLoading ? 'bg-slate-800 text-slate-600' : 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'}`}
                         />
                     </PromptInputToolbar>
                 </PromptInput>
-                <div className="text-[10px] text-gray-500 text-center mt-3">
-                    Vibe generated content. verify before use.
+                <div className="text-[9px] text-slate-600 text-center mt-4 font-bold uppercase tracking-widest italic flex items-center justify-center gap-2">
+                    <div className="w-1 h-1 rounded-full bg-slate-700"></div>
+                    Neural output generated • Verification recommended
+                    <div className="w-1 h-1 rounded-full bg-slate-700"></div>
                 </div>
             </div>
         </div>

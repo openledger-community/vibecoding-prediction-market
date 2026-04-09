@@ -14,25 +14,25 @@ export default function NavigationTabs({ currentTab, onTabChange }: NavigationTa
     ];
 
     return (
-        <div className="flex justify-center mb-8">
-            <div className="bg-white/5 backdrop-blur-md rounded-lg p-1 flex gap-1 border border-white/10">
-                {tabs.map((tab) => {
-                    const active = tab.name === currentTab;
-                    return (
-                        <button
-                            key={tab.name}
-                            onClick={() => onTabChange(tab.name)}
-                            className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-all ${active
-                                ? "bg-white/10 text-white shadow-sm ring-1 ring-white/5"
-                                : "text-gray-400 hover:text-white hover:bg-white/5"
-                                }`}
-                        >
-                            <tab.icon className="w-4 h-4" />
-                            {tab.name}
-                        </button>
-                    );
-                })}
-            </div>
+    <div className="flex justify-center mb-12">
+        <div className="bg-[#0d0f16]/40 backdrop-blur-md rounded-xl p-1.5 flex gap-1.5 border border-white/10 shadow-lg">
+            {tabs.map((tab) => {
+                const active = tab.name === currentTab;
+                return (
+                    <button
+                        key={tab.name}
+                        onClick={() => onTabChange(tab.name)}
+                        className={`flex items-center gap-2.5 px-6 py-2.5 text-sm font-bold rounded-lg transition-all duration-300 ${active
+                            ? "bg-blue-600/10 text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.15)] ring-1 ring-blue-500/30"
+                            : "text-slate-500 hover:text-slate-200 hover:bg-white/5"
+                            }`}
+                    >
+                        <tab.icon className={`w-4.5 h-4.5 transition-colors ${active ? "text-blue-400" : "text-slate-500"}`} />
+                        {tab.name}
+                    </button>
+                );
+            })}
         </div>
+    </div>
     );
 }

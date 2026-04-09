@@ -72,7 +72,7 @@ export function FileTree({ files, selectedFile, onSelect }: FileTreeProps) {
     }, [files]);
 
     return (
-        <div className="w-full h-full overflow-y-auto custom-scrollbar text-sm text-gray-300 p-2">
+        <div className="w-full h-full overflow-y-auto custom-scrollbar text-[11px] font-bold text-slate-400 p-3">
             {tree.map((node) => (
                 <TreeNode
                     key={node.path}
@@ -109,15 +109,15 @@ function TreeNode({
     };
 
     return (
-        <div>
+        <div className="mb-0.5">
             <div
-                className={`flex items-center gap-1.5 py-1 px-2 rounded-md cursor-pointer transition-colors select-none ${isSelected ? "bg-indigo-500/20 text-indigo-300" : "hover:bg-white/5 hover:text-gray-200"
+                className={`flex items-center gap-2 py-2 px-3 rounded-lg cursor-pointer transition-all select-none group ${isSelected ? "bg-blue-600/10 text-blue-400 border border-blue-500/20 shadow-inner" : "hover:bg-white/5 hover:text-slate-200 border border-transparent"
                     }`}
-                style={{ paddingLeft: `${level * 12 + 8}px` }}
+                style={{ paddingLeft: `${level * 12 + 12}px` }}
                 onClick={handleClick}
             >
                 {node.type === "folder" ? (
-                    <span className="text-gray-500">
+                    <span className="text-slate-600 group-hover:text-slate-400 transition-colors">
                         {isOpen ? (
                             <ChevronDownIcon className="w-3.5 h-3.5" />
                         ) : (
@@ -129,12 +129,12 @@ function TreeNode({
                 )}
 
                 {node.type === "folder" ? (
-                    <FolderIcon className="w-4 h-4 text-blue-400/70" />
+                    <FolderIcon className={`w-4 h-4 transition-colors ${isOpen ? "text-blue-500/80" : "text-slate-600"}`} />
                 ) : (
-                    <DocumentIcon className="w-4 h-4 text-gray-500" />
+                    <DocumentIcon className={`w-4 h-4 transition-colors ${isSelected ? "text-blue-400" : "text-slate-600 group-hover:text-slate-400"}`} />
                 )}
 
-                <span className="truncate">{node.name}</span>
+                <span className="truncate uppercase tracking-wider">{node.name}</span>
             </div>
 
             {isOpen && node.children && (

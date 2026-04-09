@@ -86,24 +86,24 @@ export default function MyAppsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#06060c] pt-24 px-6">
+    <div className="min-h-screen bg-[#06070a] pt-32 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-12">
           <div>
-            <h1 className="text-3xl font-bold text-white mb-2">My Apps</h1>
-            <p className="text-gray-400">
-              {apps.length} {apps.length === 1 ? "app" : "apps"} created
+            <h1 className="text-4xl font-bold text-slate-100 mb-3 tracking-tight">My Apps</h1>
+            <p className="text-slate-500 font-medium">
+              {apps.length} {apps.length === 1 ? "app" : "apps"} created <span className="mx-2 text-white/5">|</span> <span className="text-blue-500/80">Management Console</span>
             </p>
           </div>
 
           {/* View Toggle */}
-          <div className="flex gap-2 bg-white/5 backdrop-blur-md rounded-lg p-1 border border-white/10">
+          <div className="flex gap-2 bg-[#0d0f16]/40 backdrop-blur-md rounded-xl p-1.5 border border-white/10 shadow-lg self-start">
             <button
               onClick={() => setViewMode("table")}
-              className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-all ${viewMode === "table"
-                ? "bg-white/10 text-white shadow-sm ring-1 ring-white/5"
-                : "text-gray-400 hover:text-white hover:bg-white/5"
+              className={`flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-lg transition-all ${viewMode === "table"
+                ? "bg-blue-600/10 text-blue-400 shadow-inner ring-1 ring-blue-500/30"
+                : "text-slate-500 hover:text-slate-200 hover:bg-white/5"
                 }`}
             >
               <TableCellsIcon className="w-4 h-4" />
@@ -111,9 +111,9 @@ export default function MyAppsPage() {
             </button>
             <button
               onClick={() => setViewMode("tile")}
-              className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-all ${viewMode === "tile"
-                ? "bg-white/10 text-white shadow-sm ring-1 ring-white/5"
-                : "text-gray-400 hover:text-white hover:bg-white/5"
+              className={`flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-lg transition-all ${viewMode === "tile"
+                ? "bg-blue-600/10 text-blue-400 shadow-inner ring-1 ring-blue-500/30"
+                : "text-slate-500 hover:text-slate-200 hover:bg-white/5"
                 }`}
             >
               <Squares2X2Icon className="w-4 h-4" />
@@ -124,89 +124,96 @@ export default function MyAppsPage() {
 
         {/* Error State */}
         {error && (
-          <div className="bg-red-900/20 border border-red-900/50 text-red-400 rounded-lg p-4 mb-6">
-            {error}
+          <div className="bg-rose-900/20 border border-rose-900/50 text-rose-400 rounded-xl p-5 mb-8 animate-in fade-in slide-in-from-top-2">
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></div>
+              {error}
+            </div>
           </div>
         )}
 
         {/* Empty State */}
         {!loading && apps.length === 0 && !error && (
-          <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-12 text-center">
-            <div className="w-16 h-16 bg-indigo-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Squares2X2Icon className="w-8 h-8 text-indigo-400" />
+          <div className="bg-[#0d0f16]/40 backdrop-blur-md border border-white/5 rounded-3xl p-20 text-center shadow-2xl">
+            <div className="w-20 h-20 bg-blue-600/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-blue-500/20 shadow-inner">
+              <Squares2X2Icon className="w-10 h-10 text-blue-400" />
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">No apps yet</h3>
-            <p className="text-gray-400 mb-6">
-              Create your first app to see it here
+            <h3 className="text-2xl font-bold text-slate-100 mb-3">No applications found</h3>
+            <p className="text-slate-500 mb-10 max-w-sm mx-auto font-medium">
+              Start your journey by creating your first vibe-coded application today.
             </p>
             <button
               onClick={() => router.push("/")}
-              className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors"
+              className="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all active:scale-95 shadow-lg shadow-blue-500/20 animate-shimmer"
             >
-              Create App
+              Create New App
             </button>
           </div>
         )}
 
         {/* Table View */}
         {viewMode === "table" && apps.length > 0 && (
-          <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-white/10">
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">
-                    Name
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">
-                    Description
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">
-                    Status
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {apps.map((app, index) => (
-                  <tr
-                    key={app.uuid || index}
-                    className="border-b border-white/5 transition-colors"
-                  >
-                    <td className="px-6 py-4">
-                      <div className="font-medium text-white">{app.name}</div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm text-gray-400 line-clamp-2">
-                        {app.description}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${app.status === 'active'
-                        ? 'bg-green-900/20 text-green-400 border border-green-900/50'
-                        : app.status === 'inactive'
-                          ? 'bg-gray-900/20 text-gray-400 border border-gray-900/50'
-                          : 'bg-yellow-900/20 text-yellow-400 border border-yellow-900/50'
-                        }`}>
-                        {app.status || 'N/A'}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          router.push(`/my-apps/${app.uuid}`);
-                        }}
-                        className="text-sm text-indigo-400 hover:text-indigo-300 font-medium"
-                      >
-                        View →
-                      </button>
-                    </td>
+          <div className="bg-[#0d0f16]/40 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/5">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-white/5 bg-white/5">
+                    <th className="px-8 py-5 text-left text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                      Name
+                    </th>
+                    <th className="px-8 py-5 text-left text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                      Description
+                    </th>
+                    <th className="px-8 py-5 text-left text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                      Status
+                    </th>
+                    <th className="px-8 py-5 text-right text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                      Actions
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {apps.map((app, index) => (
+                    <tr
+                      key={app.uuid || index}
+                      className="group hover:bg-white/5 transition-colors"
+                    >
+                      <td className="px-8 py-6">
+                        <div className="font-bold text-slate-100 group-hover:text-blue-400 transition-colors">{app.name}</div>
+                        <div className="text-[10px] font-mono text-slate-600 mt-1 uppercase tracking-tighter">{app.uuid?.slice(0, 8)}</div>
+                      </td>
+                      <td className="px-8 py-6">
+                        <div className="text-sm text-slate-400 line-clamp-2 max-w-md leading-relaxed">
+                          {app.description}
+                        </div>
+                      </td>
+                      <td className="px-8 py-6">
+                        <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider shadow-inner ${app.status === 'active'
+                          ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                          : app.status === 'inactive'
+                            ? 'bg-slate-800/50 text-slate-500 border border-white/5'
+                            : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                          }`}>
+                          <div className={`w-1.5 h-1.5 rounded-full ${app.status === 'active' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-slate-500'}`}></div>
+                          {app.status || 'N/A'}
+                        </span>
+                      </td>
+                      <td className="px-8 py-6 text-right">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            router.push(`/my-apps/${app.uuid}`);
+                          }}
+                          className="text-xs font-bold bg-blue-500/10 hover:bg-blue-600 hover:text-white text-blue-400 px-4 py-2 rounded-lg border border-blue-500/20 hover:border-blue-500 transition-all active:scale-95"
+                        >
+                          View Console
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
 
@@ -216,33 +223,38 @@ export default function MyAppsPage() {
             {apps.map((app, index) => (
               <div
                 key={app.uuid || index}
-                className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 hover:border-white/20 transition-all"
+                className="group relative flex flex-col bg-[#0d0f16]/40 backdrop-blur-md border border-white/5 rounded-2xl p-6 hover:bg-[#161a24]/60 hover:border-blue-500/30 transition-all duration-300 shadow-lg hover:shadow-blue-500/5 hover:-translate-y-1"
               >
-                <div className="flex items-start justify-between mb-3">
-                  <h3 className="text-lg font-semibold text-white">
-                    {app.name}
-                  </h3>
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${app.status === 'active'
-                    ? 'bg-green-900/20 text-green-400 border border-green-900/50'
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-100 group-hover:text-blue-400 transition-colors">
+                      {app.name}
+                    </h3>
+                    <div className="text-[10px] font-mono text-slate-600 mt-0.5 uppercase tracking-tighter">{app.uuid?.slice(0, 8)}</div>
+                  </div>
+                  <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider ${app.status === 'active'
+                    ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
                     : app.status === 'inactive'
-                      ? 'bg-gray-900/20 text-gray-400 border border-gray-900/50'
-                      : 'bg-yellow-900/20 text-yellow-400 border border-yellow-900/50'
+                      ? 'bg-slate-800/50 text-slate-500 border border-white/5'
+                      : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
                     }`}>
+                    <div className={`w-1.5 h-1.5 rounded-full ${app.status === 'active' ? 'bg-emerald-500' : 'bg-slate-500'}`}></div>
                     {app.status || 'N/A'}
                   </span>
                 </div>
-                <p className="text-sm text-gray-400 mb-4 line-clamp-3">
+                <p className="text-sm text-slate-400 mb-8 line-clamp-3 leading-relaxed font-medium">
                   {app.description}
                 </p>
-                <div className="flex items-center justify-end">
+                <div className="mt-auto flex items-center justify-between pt-4 border-t border-white/5">
+                  <div className="text-[10px] text-slate-600 font-bold uppercase tracking-widest italic">Vibe Certified</div>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       router.push(`/my-apps/${app.uuid}`);
                     }}
-                    className="text-sm text-indigo-400 hover:text-indigo-300 font-medium"
+                    className="text-xs font-bold bg-white/5 hover:bg-blue-600 hover:text-white text-slate-300 px-4 py-2 rounded-xl border border-white/5 hover:border-blue-500 transition-all active:scale-95"
                   >
-                    View →
+                    Manage →
                   </button>
                 </div>
               </div>

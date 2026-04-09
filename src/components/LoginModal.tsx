@@ -34,22 +34,22 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             />
 
             {/* Modal Content */}
-            <div className="relative w-full max-w-md bg-[#0f1016] border border-white/10 rounded-2xl shadow-2xl p-8 animate-in zoom-in-95 duration-300">
+            <div className="relative w-full max-w-md bg-[#0d0f16]/95 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-2xl p-8 animate-in zoom-in-95 duration-300">
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 p-2 rounded-full hover:bg-white/5 text-gray-500 hover:text-white transition-colors"
+                    className="absolute top-4 right-4 p-2 rounded-full hover:bg-white/10 text-slate-500 hover:text-white transition-colors"
                     aria-label="Close"
                 >
                     <XMarkIcon className="w-5 h-5" />
                 </button>
 
                 <div className="text-center">
-                    <div className="w-16 h-16 bg-indigo-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-indigo-500/20">
+                    <div className="w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-blue-500/20 shadow-inner">
                         <span className="text-3xl">{isWalletMode ? "🔗" : "🔐"}</span>
                     </div>
 
-                    <h2 className="text-2xl font-bold text-white mb-2">Sign In Required</h2>
-                    <p className="text-gray-400 mb-8 leading-relaxed">
+                    <h2 className="text-2xl font-bold text-slate-100 mb-2">Sign In Required</h2>
+                    <p className="text-slate-400 mb-8 leading-relaxed font-medium">
                         {isWalletMode
                             ? "Connect your wallet to search and interact with prediction markets."
                             : "You need to sign in to search and interact with prediction markets."}
@@ -70,7 +70,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                     {!isWalletMode && (
                         <button
                             onClick={() => signIn("google")}
-                            className="w-full py-4 px-6 rounded-xl bg-white text-black font-bold hover:bg-gray-200 transition-all flex items-center justify-center gap-3 active:scale-[0.98]"
+                            className="w-full py-4 px-6 rounded-xl bg-white text-black font-bold hover:bg-slate-200 transition-all flex items-center justify-center gap-3 active:scale-[0.98] shadow-lg shadow-white/5"
                         >
                             <svg className="w-5 h-5" viewBox="0 0 24 24">
                                 <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -82,7 +82,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                         </button>
                     )}
 
-                    <p className="mt-6 text-xs text-gray-500">
+                    <p className="mt-6 text-xs text-slate-600 font-medium">
                         By continuing, you agree to our Terms and Privacy Policy.
                     </p>
                 </div>

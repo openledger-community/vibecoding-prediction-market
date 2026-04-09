@@ -46,7 +46,7 @@ export default function PromptBox({
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      <div className="relative group bg-[#111218] border border-white/10 rounded-2xl p-4 transition-all focus-within:border-white/20 focus-within:ring-1 focus-within:ring-white/10 shadow-lg">
+      <div className="relative group bg-[#0d0f16]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 transition-all focus-within:border-blue-500/50 focus-within:ring-4 focus-within:ring-blue-500/10 shadow-2xl">
         {/* Text Area */}
         <textarea
           ref={textareaRef}
@@ -55,7 +55,7 @@ export default function PromptBox({
           onKeyDown={handleKeyDown}
           placeholder="Search markets or profiles..."
           rows={1}
-          className="w-full bg-transparent text-gray-100 placeholder-gray-500 text-lg resize-none focus:outline-none min-h-[40px] max-h-[200px] mb-4"
+          className="w-full bg-transparent text-slate-100 placeholder-slate-500 text-lg resize-none focus:outline-none min-h-[40px] max-h-[200px] mb-4"
         />
 
         {/* Bottom Bar */}
@@ -68,22 +68,22 @@ export default function PromptBox({
           <button
             onClick={onSubmit}
             disabled={!prompt.trim() || loading}
-            className={`p-2 rounded-xl transition-all shadow-lg ${prompt.trim() && !loading
-              ? "bg-white text-black hover:bg-gray-200"
-              : "bg-white/5 text-gray-600 cursor-not-allowed"
+            className={`p-2.5 rounded-xl transition-all shadow-lg flex items-center justify-center ${prompt.trim() && !loading
+              ? "bg-blue-600 text-white hover:bg-blue-500 shadow-blue-500/20 active:scale-95"
+              : "bg-white/5 text-slate-600 cursor-not-allowed border border-white/5"
               }`}
           >
             {loading ? (
-              <div className="w-5 h-5 border-2 border-gray-600 border-t-gray-400 rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-slate-600 border-t-slate-400 rounded-full animate-spin" />
             ) : (
-              <ArrowUpIcon className="w-5 h-5 stroke-[3]" />
+              <ArrowUpIcon className="w-5 h-5 stroke-[2.5]" />
             )}
           </button>
         </div>
       </div>
 
       {!hideDisclaimer && (
-        <p className="text-center text-[11px] text-gray-600 mt-4 tracking-tight">
+        <p className="text-center text-[11px] text-slate-500 mt-4 tracking-tight font-medium">
           Predictions are market-based. Always check the primary source for verification.
         </p>
       )}

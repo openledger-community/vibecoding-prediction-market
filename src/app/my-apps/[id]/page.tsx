@@ -91,10 +91,13 @@ export default function AppDetailPage() {
   const isLoadingUI = isWalletMode ? loading : (status === "loading" || loading);
   if (isLoadingUI) {
     return (
-      <div className="min-h-screen bg-[#06060c] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <ArrowPathIcon className="w-8 h-8 text-indigo-500 animate-spin" />
-          <p className="text-gray-400">Loading application...</p>
+      <div className="min-h-screen bg-[#06070a] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-6">
+          <div className="relative">
+            <ArrowPathIcon className="w-10 h-10 text-blue-500 animate-spin" />
+            <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full"></div>
+          </div>
+          <p className="text-slate-400 font-bold tracking-widest uppercase text-[10px] animate-pulse">Initializing Interface...</p>
         </div>
       </div>
     );
@@ -102,15 +105,18 @@ export default function AppDetailPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#06060c] flex items-center justify-center">
-        <div className="text-center">
-          <div className="bg-red-900/20 border border-red-900/50 text-red-400 rounded-lg p-6 mb-6 inline-block">
-            <p className="text-lg font-medium">{error}</p>
+      <div className="min-h-screen bg-[#06070a] flex items-center justify-center p-6">
+        <div className="text-center max-w-md">
+          <div className="bg-rose-900/20 border border-rose-900/50 text-rose-400 rounded-3xl p-8 mb-8 shadow-2xl backdrop-blur-xl">
+            <div className="w-16 h-16 bg-rose-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-rose-500/20">
+              <span className="text-3xl">⚠️</span>
+            </div>
+            <h2 className="text-xl font-bold text-slate-100 mb-2">Access Denied</h2>
+            <p className="text-slate-400 font-medium leading-relaxed">{error}</p>
           </div>
-          <br />
           <button
             onClick={() => router.push("/my-apps")}
-            className="flex items-center gap-2 text-gray-400 hover:text-white mx-auto transition-colors"
+            className="flex items-center gap-2 text-slate-500 hover:text-white mx-auto transition-all font-bold px-6 py-3 rounded-xl hover:bg-white/5 active:scale-95"
           >
             <ArrowLeftIcon className="w-5 h-5" />
             Back to My Apps
@@ -123,7 +129,7 @@ export default function AppDetailPage() {
   // Direct Preview - Full Screen VibeResult
   // We use VibeResult which already has a fixed inset-0 layout
   return (
-    <div className="min-h-screen bg-[#06060c]">
+    <div className="min-h-screen bg-[#06070a]">
       <VibeResult
         chat={chatData}
         loading={false} // Loading handled by parent state

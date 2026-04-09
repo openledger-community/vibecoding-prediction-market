@@ -39,30 +39,30 @@ export default function CategoryPicker({ taxonomy, onSearch, loading }: Category
     <div className="w-full max-w-3xl mx-auto mt-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="bg-[#111218]/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
         {/* Decorative background glow */}
-        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-32 h-32 bg-indigo-500/10 blur-[60px] pointer-events-none" />
+        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-32 h-32 bg-blue-500/10 blur-[60px] pointer-events-none" />
 
         <div className="relative z-10 space-y-8">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400">
-              <FunnelIcon className="w-5 h-5" />
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-400 border border-blue-500/20 shadow-inner">
+              <FunnelIcon className="w-6 h-6" />
             </div>
             <div>
-              <p className="text-white font-bold text-lg">Couldn't find a match</p>
-              <p className="text-gray-500 text-xs">Let's narrow it down. Pick a category and optional tags.</p>
+              <p className="text-slate-100 font-bold text-lg tracking-tight">NULL POINTER DETECTED</p>
+              <p className="text-slate-600 text-[10px] font-bold uppercase tracking-[0.2em]">Narrow parameters for high-fidelity search</p>
             </div>
           </div>
 
           <div className="space-y-8">
             {/* Category selection */}
-            <div className="space-y-3">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 px-1">Category</label>
+            <div className="space-y-4">
+              <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-600 px-1">Primary Instance</label>
               <div className="relative">
                 <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="w-full bg-white/5 border border-white/10 text-white rounded-2xl px-5 py-4 text-sm font-medium flex items-center justify-between hover:bg-white/10 hover:border-white/20 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                  className="w-full bg-white/[0.03] border border-white/5 text-slate-100 rounded-2xl px-6 py-4 text-sm font-bold flex items-center justify-between hover:bg-white/[0.06] hover:border-blue-500/20 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500/30 backdrop-blur-md"
                 >
-                  <span className="truncate">{selectedCategory}</span>
-                  <ChevronDownIcon className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""}`} />
+                  <span className="truncate tracking-tight">{selectedCategory}</span>
+                  <ChevronDownIcon className={`w-4 h-4 text-slate-500 transition-transform duration-500 ${isDropdownOpen ? "rotate-180" : ""}`} />
                 </button>
 
                 {isDropdownOpen && (
@@ -94,9 +94,9 @@ export default function CategoryPicker({ taxonomy, onSearch, loading }: Category
                         key={tag}
                         type="button"
                         onClick={() => toggleTag(tag)}
-                        className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 transform active:scale-95 ${isSelected
-                          ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/25"
-                          : "bg-white/5 text-gray-400 border border-white/5 hover:bg-white/10 hover:text-white"
+                        className={`px-5 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all duration-500 transform active:scale-95 border ${isSelected
+                          ? "bg-blue-600 text-white shadow-lg shadow-blue-500/25 border-blue-400/30"
+                          : "bg-white/5 text-slate-500 border-white/5 hover:bg-white/10 hover:text-slate-200"
                           }`}
                       >
                         {tag}
@@ -114,12 +114,12 @@ export default function CategoryPicker({ taxonomy, onSearch, loading }: Category
             <button
               onClick={handleSearch}
               disabled={loading}
-              className={`group w-full py-4 rounded-2xl font-bold text-sm transition-all shadow-xl overflow-hidden relative ${!loading
-                ? "bg-indigo-600 text-white hover:bg-indigo-500 shadow-indigo-500/40 active:scale-[0.98]"
-                : "bg-gray-800/50 text-gray-500 cursor-not-allowed border border-white/5"
+              className={`group w-full py-4 rounded-2xl font-bold text-[11px] uppercase tracking-[0.2em] transition-all shadow-2xl overflow-hidden relative border ${!loading
+                ? "bg-blue-600 text-white hover:bg-blue-500 shadow-blue-500/30 active:scale-[0.98] border-blue-400/20"
+                : "bg-slate-800/50 text-slate-600 cursor-not-allowed border-white/5"
                 }`}
             >
-              <div className="relative z-10 flex items-center justify-center gap-2">
+              <div className="relative z-10 flex items-center justify-center gap-3">
                 {loading ? (
                   <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
@@ -127,8 +127,8 @@ export default function CategoryPicker({ taxonomy, onSearch, loading }: Category
                   </svg>
                 ) : (
                   <>
-                    <MagnifyingGlassIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                    <span>Run Advanced Search</span>
+                    <MagnifyingGlassIcon className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                    <span>Run Advanced Diagnostic</span>
                   </>
                 )}
               </div>

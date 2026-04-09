@@ -1,4 +1,4 @@
-# VibeCoding Prediction Market
+# Vibcoding Prep-dex
 
 A modern prediction market platform built with Next.js, React, and Tailwind CSS.
 

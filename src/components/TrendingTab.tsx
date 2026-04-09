@@ -17,17 +17,19 @@ export default function TrendingTab() {
 
   return (
     <div className="w-full max-w-3xl mx-auto">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-8">
         <div>
-          <h2 className="text-xl font-semibold text-white">🔥 Trending Markets</h2>
-          <p className="text-gray-500 text-sm mt-0.5">Most active prediction markets right now</p>
+          <h2 className="text-sm font-bold text-slate-100 uppercase tracking-[0.2em] mb-1">High-Entropy Sectors</h2>
+          <p className="text-slate-600 text-[10px] font-bold uppercase tracking-[0.15em]">Real-time market volatility matrix</p>
         </div>
-        <div className="flex gap-1 bg-white/5 border border-white/10 rounded-lg p-0.5">
+        <div className="flex gap-1.5 bg-[#161a24]/40 border border-white/5 rounded-xl p-1 shadow-inner">
           {["24h", "7d", "30d"].map((range) => (
             <button
               key={range}
               onClick={() => setTimeRange(range)}
-              className={`px-3 py-1.5 text-xs rounded-md transition-colors ${timeRange === range ? "bg-white/10 text-white" : "text-gray-400 hover:text-white"
+              className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest rounded-lg transition-all ${timeRange === range
+                ? "bg-blue-600/20 text-blue-400 border border-blue-500/30 shadow-sm"
+                : "text-slate-500 hover:text-slate-200"
                 }`}
             >
               {range}
@@ -36,30 +38,30 @@ export default function TrendingTab() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-4">
         {TRENDING_DATA.map((item) => (
           <div
             key={item.rank}
-            className="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-colors"
+            className="flex items-center justify-between bg-[#0d0f16]/60 backdrop-blur-xl border border-white/5 rounded-2xl p-6 group hover:bg-[#161a24]/80 hover:border-blue-500/30 transition-all duration-500 shadow-xl hover:shadow-blue-500/10"
           >
-            <div className="flex-1 min-w-0 mr-4">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs font-bold bg-gradient-to-r from-amber-500 to-orange-500 text-white px-2.5 py-0.5 rounded-full">
-                  #{item.rank} Trending
+            <div className="flex-1 min-w-0 mr-6">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-[9px] font-bold bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-3 py-1 rounded-lg uppercase tracking-widest shadow-lg shadow-blue-500/20">
+                  Priority {item.rank}
                 </span>
-                <span className="text-xs text-gray-400 border border-white/10 px-2.5 py-0.5 rounded-full">
+                <span className="text-[9px] font-bold text-slate-500 border border-white/5 px-3 py-1 rounded-lg uppercase tracking-[0.15em] bg-white/[0.02]">
                   {item.category}
                 </span>
               </div>
-              <h3 className="text-white font-medium text-sm leading-snug">{item.title}</h3>
-              <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
-                <span>$ Volume: {item.volume}</span>
-                <span>👤 {item.participants.toLocaleString()} participants</span>
-                <span className="text-emerald-400 font-medium">📈 {item.change}</span>
+              <h3 className="text-slate-100 font-bold text-sm leading-relaxed tracking-tight group-hover:text-white transition-colors">{item.title}</h3>
+              <div className="flex flex-wrap items-center gap-5 mt-3 text-[9px] font-bold uppercase tracking-widest text-slate-600 italic">
+                <span className="flex items-center gap-1.5"><div className="w-1 h-1 rounded-full bg-slate-700" /> Volume: {item.volume}</span>
+                <span className="flex items-center gap-1.5"><div className="w-1 h-1 rounded-full bg-slate-700" /> {item.participants.toLocaleString()} Nodes</span>
+                <span className="text-blue-400 flex items-center gap-1.5"> <div className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_5px_rgba(59,130,246,0.5)]" /> Momentum {item.change}</span>
               </div>
             </div>
-            <button className="flex items-center gap-1.5 text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg transition-colors whitespace-nowrap flex-shrink-0">
-              View <ArrowRightIcon className="w-3.5 h-3.5" />
+            <button className="flex items-center gap-2 text-[10px] font-bold bg-blue-600 hover:bg-blue-500 text-white px-5 py-3 rounded-xl transition-all uppercase tracking-widest whitespace-nowrap flex-shrink-0 active:scale-95 shadow-lg shadow-blue-500/20 border border-blue-400/20">
+              Access Node <ArrowRightIcon className="w-3.5 h-3.5" />
             </button>
           </div>
         ))}

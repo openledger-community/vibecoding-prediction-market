@@ -14,23 +14,23 @@ export function CodeViewer({ content, language, theme = "vs-dark" }: CodeViewerP
             base: "vs-dark",
             inherit: true,
             rules: [
-                { token: "", foreground: "d1d5db" }, // gray-300
-                { token: "comment", foreground: "6b7280" }, // gray-500
-                { token: "keyword", foreground: "818cf8" }, // indigo-400
-                { token: "string", foreground: "a5b4fc" }, // indigo-300
-                { token: "number", foreground: "c084fc" }, // purple-400
-                { token: "delimiter", foreground: "9ca3af" }, // gray-400
+                { token: "", foreground: "94a3b8" }, // slate-400
+                { token: "comment", foreground: "475569" }, // slate-600
+                { token: "keyword", foreground: "60a5fa" }, // blue-400
+                { token: "string", foreground: "93c5fd" }, // blue-300
+                { token: "number", foreground: "34d399" }, // emerald-400
+                { token: "delimiter", foreground: "64748b" }, // slate-500
             ],
             colors: {
-                "editor.background": "#0a0a0f",
-                "editor.foreground": "#d1d5db",
+                "editor.background": "#06070a",
+                "editor.foreground": "#94a3b8",
                 "editor.lineHighlightBackground": "#ffffff05",
-                "editor.selectionBackground": "#6366f130", // indigo-500 at 30%
-                "editorCursor.foreground": "#818cf8", // indigo-400
-                "editorLineNumber.foreground": "#4b5563", // gray-600
-                "editorLineNumber.activeForeground": "#d1d5db", // gray-300
-                "editorIndentGuide.background": "#ffffff10",
-                "editorIndentGuide.activeBackground": "#ffffff20",
+                "editor.selectionBackground": "#3b82f630", // blue-500 at 30%
+                "editorCursor.foreground": "#60a5fa", // blue-400
+                "editorLineNumber.foreground": "#334155", // slate-700
+                "editorLineNumber.activeForeground": "#94a3b8", // slate-400
+                "editorIndentGuide.background": "#ffffff08",
+                "editorIndentGuide.activeBackground": "#ffffff15",
             },
         });
     };

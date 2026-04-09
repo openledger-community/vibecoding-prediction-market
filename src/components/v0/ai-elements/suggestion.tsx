@@ -21,7 +21,7 @@ export function Suggestion({
             onClick={onClick}
             disabled={disabled}
             className={cn(
-                "h-8 rounded-full border-muted-foreground/20 px-4 text-xs font-normal text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground",
+                "h-9 rounded-xl border-white/5 bg-[#161a24]/40 px-5 text-[11px] font-bold text-slate-400 transition-all hover:bg-blue-600/10 hover:border-blue-500/30 hover:text-blue-400 shadow-lg active:scale-95 uppercase tracking-wide",
                 className
             )}
         >

@@ -54,10 +54,10 @@ export function ThinkingSectionWrapper({
                 }}
                 className="w-full flex items-center justify-between p-3 text-left hover:bg-white/5 transition-colors"
             >
-                <div className="flex items-center gap-2">
-                    <span className="text-indigo-400 text-sm">🧠</span>
-                    <span className="text-gray-300 text-sm font-medium">
-                        {title || "Thinking"}
+                <div className="flex items-center gap-3">
+                    <span className="text-blue-400 text-sm">🧠</span>
+                    <span className="text-slate-100 text-[10px] font-bold uppercase tracking-[0.2em]">
+                        {title || "Logic Synthesis"}
                     </span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -105,34 +105,34 @@ export function TaskSectionWrapper({
         if (part && typeof part === "object") {
             if (part.type === "select-files" && Array.isArray(part.filePaths)) {
                 return (
-                    <div key={index} className="flex items-center gap-2 text-sm text-gray-300 flex-wrap">
-                        <span className="text-gray-500">Read</span>
+                    <div key={index} className="flex items-center gap-2 text-sm text-slate-100 flex-wrap">
+                        <span className="text-slate-600 font-bold text-[10px] uppercase tracking-widest italic">Source:</span>
                         {part.filePaths.map((file: string, i: number) => (
-                            <span key={i} className="bg-white/10 text-indigo-300 text-xs px-1.5 py-0.5 rounded font-mono">{file.split("/").pop()}</span>
+                            <span key={i} className="bg-blue-500/10 text-blue-400 text-[10px] px-2 py-0.5 rounded-lg border border-blue-400/20 font-bold uppercase tracking-tight">{file.split("/").pop()}</span>
                         ))}
                     </div>
                 );
             }
             if (part.type === "reading-file" && part.filePath) {
                 return (
-                    <div key={index} className="flex items-center gap-2 text-sm text-gray-300">
-                        <span className="text-gray-500">Reading</span>
-                        <span className="bg-white/10 text-indigo-300 text-xs px-1.5 py-0.5 rounded font-mono">{part.filePath.split("/").pop()}</span>
+                    <div key={index} className="flex items-center gap-2 text-sm text-slate-100">
+                        <span className="text-slate-600 font-bold text-[10px] uppercase tracking-widest italic">Scanning:</span>
+                        <span className="bg-blue-500/10 text-blue-400 text-[10px] px-2 py-0.5 rounded-lg border border-blue-400/20 font-bold uppercase tracking-tight">{part.filePath.split("/").pop()}</span>
                     </div>
                 );
             }
             if (part.type === "code-project" && part.changedFiles) {
                 return (
-                    <div key={index} className="flex items-center gap-2 text-sm text-gray-300 flex-wrap">
-                        <span className="text-gray-500">Editing</span>
+                    <div key={index} className="flex items-center gap-2 text-sm text-slate-100 flex-wrap">
+                        <span className="text-slate-600 font-bold text-[10px] uppercase tracking-widest italic">Mutating:</span>
                         {part.changedFiles.map((file: any, i: number) => (
-                            <span key={i} className="bg-white/10 text-indigo-300 text-xs px-1.5 py-0.5 rounded font-mono">{file.fileName || file.baseName}</span>
+                            <span key={i} className="bg-blue-500/10 text-blue-400 text-[10px] px-2 py-0.5 rounded-lg border border-blue-400/20 font-bold uppercase tracking-tight">{file.fileName || file.baseName}</span>
                         ))}
                     </div>
                 );
             }
             if ((part.type === "starting-repo-search" || part.type === "starting-web-search") && part.query) {
-                return <div key={index} className="text-sm text-gray-300">Searching: <span className="text-indigo-300">&ldquo;{part.query}&rdquo;</span></div>;
+                return <div key={index} className="text-[10px] font-bold uppercase tracking-widest text-slate-100">Querying: <span className="text-blue-400 italic">&ldquo;{part.query}&rdquo;</span></div>;
             }
             if (part.type === "fetching-diagnostics") return <div key={index} className="text-sm text-gray-400">Checking for issues...</div>;
             if (part.type === "diagnostics-passed") return <div key={index} className="text-sm text-green-400">✓ No issues found</div>;
@@ -199,14 +199,14 @@ export const sharedComponents = {
     h4: { className: "text-sm font-bold text-white mb-2 mt-3" },
     h5: { className: "text-sm font-medium text-white mb-1 mt-2" },
     h6: { className: "text-sm font-medium text-white mb-1 mt-2" },
-    ul: { className: "list-disc list-inside space-y-1 mb-4 text-gray-300" },
-    ol: { className: "list-decimal list-inside space-y-1 mb-4 text-gray-300" },
-    li: { className: "text-gray-300" },
-    blockquote: { className: "border-l-2 border-indigo-500 pl-4 italic text-gray-400 my-4" },
-    a: { className: "text-indigo-400 hover:text-indigo-300 underline underline-offset-2 transition-colors" },
-    strong: { className: "font-bold text-white" },
-    em: { className: "italic text-gray-300" },
-    hr: { className: "border-white/10 my-6" },
-    pre: { className: "bg-black/30 p-4 rounded-lg overflow-x-auto my-4 font-mono text-sm border border-white/5" },
-    code: { className: "bg-white/10 px-1.5 py-0.5 rounded text-indigo-300 font-mono text-sm" },
+    ul: { className: "list-disc list-inside space-y-2 mb-6 text-slate-400 text-sm" },
+    ol: { className: "list-decimal list-inside space-y-2 mb-6 text-slate-400 text-sm" },
+    li: { className: "text-slate-300" },
+    blockquote: { className: "border-l-4 border-blue-600/50 pl-6 py-2 bg-blue-600/5 italic text-slate-400 my-6 rounded-r-xl" },
+    a: { className: "text-blue-400 hover:text-blue-300 underline underline-offset-4 decoration-blue-500/30 hover:decoration-blue-400 transition-all font-bold" },
+    strong: { className: "font-bold text-white shadow-[0_0_10px_rgba(255,255,255,0.05)]" },
+    em: { className: "italic text-slate-400" },
+    hr: { className: "border-white/5 my-8 shadow-sm" },
+    pre: { className: "bg-[#0d0f16] p-6 rounded-2xl overflow-x-auto my-6 font-mono text-[13px] border border-white/5 shadow-inner" },
+    code: { className: "bg-blue-500/10 px-2 py-0.5 rounded-lg text-blue-400 font-bold text-[13px]" },
 };

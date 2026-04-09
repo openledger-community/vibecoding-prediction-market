@@ -14,7 +14,7 @@ interface VibeResultProps {
 
 export default function VibeResult(props: VibeResultProps) {
     return (
-        <div className="fixed inset-0 z-[100] bg-[#06060c]">
+        <div className="fixed inset-0 z-[100] bg-[#06070a]">
             <ChatDetailClient
                 initialMessages={props.chat?.messages}
                 chatId={props.chat?.id}

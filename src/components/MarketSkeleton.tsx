@@ -8,7 +8,7 @@ export default function MarketSkeleton() {
             {/* Intent badge skeleton */}
             <div className="flex items-center gap-2 mb-6">
                 <div className="h-4 w-16 bg-white/5 rounded animate-pulse" />
-                <div className="h-6 w-24 bg-indigo-500/10 rounded-full animate-pulse border border-indigo-500/10" />
+                <div className="h-6 w-24 bg-blue-500/10 rounded-full animate-pulse border border-blue-500/10" />
                 <div className="h-6 w-20 bg-white/5 rounded-full animate-pulse border border-white/5" />
             </div>
 
@@ -21,7 +21,7 @@ export default function MarketSkeleton() {
                     >
                         <div className="mb-4">
                             <div className="flex items-start justify-between mb-3">
-                                <div className="h-4 w-20 bg-indigo-500/10 rounded animate-pulse" />
+                                <div className="h-4 w-20 bg-blue-500/10 rounded animate-pulse" />
                                 <div className="w-2 h-2 rounded-full bg-white/10 animate-pulse" />
                             </div>
                             <div className="space-y-2">

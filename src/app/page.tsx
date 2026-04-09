@@ -236,13 +236,13 @@ export default function Home() {
   const hasSearchOutput = markets !== null || fallback || error || (loading && !isPromptSearch);
 
   return (
-    <main className="h-screen bg-[#06060c] text-white flex flex-col items-center overflow-hidden">
+    <main className="h-screen bg-[#06070a] text-slate-100 flex flex-col items-center overflow-hidden">
       {!hasSearchOutput ? (
         /* ── IDLE STATE (Centered Stack) ─────────────────────────────────── */
         <div className="flex-1 w-full max-w-7xl px-6 flex flex-col items-center justify-center animate-in fade-in duration-700">
           <div className="text-center mb-10">
-            <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight mb-4 text-white">
-              What do you want to <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">create?</span>
+            <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4 text-white">
+              What do you want to <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">create?</span>
             </h2>
           </div>
 
@@ -301,7 +301,7 @@ export default function Home() {
                 {categoryTags && markets !== null && (
                   <div className="w-full max-w-4xl mx-auto">
                     {showVibeForm ? (
-                      <div className="fixed inset-0 z-40 bg-[#06060c] overflow-y-auto pt-16 custom-scrollbar scrollbar-hide animate-in fade-in duration-500">
+                      <div className="fixed inset-0 z-40 bg-[#06070a]/95 backdrop-blur-3xl overflow-y-auto pt-16 custom-scrollbar scrollbar-hide animate-in fade-in duration-500">
                         <VibeCodingForm
                           categoryTags={categoryTags}
                           onSubmit={handleVibeSubmit}
@@ -334,7 +334,7 @@ export default function Home() {
 
           {/* Fixed Bottom Search Box */}
           {!showVibeForm && (
-            <div className="w-full fixed bottom-0 left-0 right-0 bg-gradient-to-t from-[#06060c] via-[#06060c] to-transparent pt-10 pb-6 px-6 z-40">
+            <div className="w-full fixed bottom-0 left-0 right-0 bg-gradient-to-t from-[#06070a] via-[#06070a] to-transparent pt-10 pb-6 px-6 z-40">
               <div className="max-w-4xl mx-auto">
                 <PromptBox
                   prompt={prompt}
